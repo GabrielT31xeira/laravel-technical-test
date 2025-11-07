@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class AuthServices {
-    public function register(User $user)
+    public function register($user)
     {
         try {
             $user = User::create([

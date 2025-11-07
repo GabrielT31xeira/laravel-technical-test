@@ -7,10 +7,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/register', [\App\Http\Controllers\api\LoginController::class, 'register']);
-Route::post('/login', [\App\Http\Controllers\api\LoginController::class, 'login']);
+Route::post('/register', [\App\Http\Controllers\api\AuthController::class, 'register']);
+Route::post('/login', [\App\Http\Controllers\api\AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [\App\Http\Controllers\api\LoginController::class, 'logout']);
-    Route::get('/user', [\App\Http\Controllers\api\LoginController::class, 'profile']);
+    Route::post('/logout', [\App\Http\Controllers\api\AuthController::class, 'logout']);
+    Route::get('/profile', [\App\Http\Controllers\api\AuthController::class, 'profile']);
 });

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('text');
             $table->integer('votes');
             $table->uuid('polls_id');
-            $table->foreign('polls_id')->references('id')->on('polls')->onDelete('cascate');
+            $table->foreign('polls_id')->references('id')->on('polls')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
