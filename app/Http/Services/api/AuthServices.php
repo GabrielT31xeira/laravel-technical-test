@@ -26,18 +26,18 @@ class AuthServices {
         }
     }
 
-    public function login(User $user)
+    public function login($data)
     {
         try {
-            $validUser = User::where('email', $user['email'])->first();
+            $validUser = User::where('email', $data['email'])->first();
 
-            if (!$user || ! Hash::check($user['password'], $validUser->password)) {
+            if (!$data || ! Hash::check($data['password'], $validUser->password)) {
                 throw ValidationException::withMessages(['email' => ['Credenciais inválidas.']]);
             }
 
-            $token = $user->createToken('auth_token')->plainTextToken;
+            $token = $validUser->createToken('auth_token')->plainTextToken;
 
-            return response()->json(['user' => $user, 'token' => $token]);
+            return response()->json(['token' => $token]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -53,10 +53,10 @@ class AuthServices {
         }
     }
 
-    public function logout(Request $request)
+    public function logout($data)
     {
         try {
-            $request->user()->currentAccessToken()->delete();
+            $data->user()->currentAccessToken()->delete();
             return response()->json(['message' => 'Logout efetuado com sucesso.']);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
